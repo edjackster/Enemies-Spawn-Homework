@@ -6,8 +6,15 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 1f;
 
-    void Update()
+    private Vector3 _direction = Vector3.forward;
+
+    private void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(_direction * speed * Time.deltaTime);
+    }
+
+    public void SetDirection(Vector3 direction)
+    {
+        _direction = direction;
     }
 }

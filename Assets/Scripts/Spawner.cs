@@ -53,27 +53,32 @@ public class Spawner : MonoBehaviour
     private void GetEnemy(Enemy enemy)
     {
         enemy.transform.position = GetRandomSpawnPosition();
-        enemy.transform.rotation = GetRandomRotation();
+        enemy.transform.rotation = Quaternion.identity;
 
+        enemy.SetDirection(GetRandomDirection());
         enemy.gameObject.SetActive(true);
     }
 
     private Enemy CreateEnemy()
     {
         var postion = GetRandomSpawnPosition();
-        var rotation = GetRandomRotation();
+        var rotation = Quaternion.identity;
         var enemy = Instantiate(_enemy, postion, rotation);
+
+        enemy.SetDirection(GetRandomDirection());
 
         return enemy;
     }
 
-    private Quaternion GetRandomRotation()
+    private Vector3 GetRandomDirection()
     {
-        var minAngle = 0f;
-        var maxAngle = 360f;
-        var angle = Random.Range(minAngle, maxAngle);
+        var directionDelta = 1f;
 
-        return Quaternion.Euler(minAngle, angle, minAngle);
+        var directionX = Random.Range(-directionDelta, directionDelta);
+        var directionY = 0f;
+        var directionZ = Random.Range(-directionDelta, directionDelta);
+
+        return new Vector3(directionX, directionY, directionZ).normalized;
     }
 
     private Vector3 GetRandomSpawnPosition()
